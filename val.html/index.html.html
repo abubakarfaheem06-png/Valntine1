@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💗</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#ff4fa3;
+  --hot:#ff2f7d;
+  --soft:#fff2f8;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  overflow:hidden;
+  font-family: Inter, system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(255,79,163,.25), transparent 55%),
+    linear-gradient(180deg,#050006,#12000a 60%,#000);
+  color:var(--soft);
+}
+
+/* ================= MOON ================= */
+.moon{
+  position:absolute;
+  top:60px;
+  right:80px;
+  width:140px;
+  height:140px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff, #ffd6e8);
+  box-shadow:
+    0 0 40px rgba(255,214,232,.9),
+    0 0 100px rgba(255,79,163,.45);
+  animation: moonGlow 4s ease-in-out infinite;
+}
+@keyframes moonGlow{
+  50%{
+    box-shadow:
+      0 0 70px rgba(255,214,232,1),
+      0 0 140px rgba(255,79,163,.6);
+  }
+}
+
+/* ================= STARS ================= */
+.star{
+  position:fixed;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  box-shadow:0 0 12px white;
+  animation: twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle{
+  50%{opacity:.3}
+}
+
+/* ================= FALLING FLOWERS ================= */
+.fall{
+  position:fixed;
+  font-size:20px;
+  pointer-events:none;
+  animation: fall linear forwards;
+}
+@keyframes fall{
+  from{transform:translateY(-10vh);opacity:0}
+  10%{opacity:1}
+  to{transform:translateY(110vh);opacity:0}
+}
+
+/* ================= CENTER ================= */
+.stage{
+  height:100%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  z-index:3;
+  padding:20px;
+}
+
+.card{
+  max-width:880px;
+  padding:44px 40px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:36px;
+  box-shadow:0 40px 120px rgba(0,0,0,.85);
+  text-align:center;
+  animation: heartbeat 1.15s infinite;
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1)}
+  25%{transform:scale(1.03)}
+  40%{transform:scale(1)}
+}
+
+h1{
+  font-family: Pacifico, cursive;
+  font-size:clamp(56px,6vw,86px);
+  margin:0 0 18px;
+  color:#fff;
+  text-shadow:
+    0 20px 60px rgba(255,79,163,.7),
+    0 0 30px rgba(255,79,163,.5);
+}
+
+p{
+  font-size:21px;
+  line-height:1.6;
+  opacity:.95;
+}
+
+/* ================= BUTTONS ================= */
+.actions{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+}
+button{
+  padding:16px 28px;
+  border-radius:26px;
+  border:none;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:900;
+  color:white;
+  transition:.15s;
+}
+#yesBtn{
+  background:linear-gradient(135deg,var(--hot),var(--pink));
+}
+#noBtn{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  position:relative;
+}
+.no-fly{position:fixed!important}
+
+small{
+  display:block;
+  margin-top:20px;
+  opacity:.85;
+  letter-spacing:.08em;
+}
+
+/* ================= TULIP FIELD ================= */
+.field{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:240px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  gap:6px;
+  z-index:2;
+}
+.tulip{
+  font-size:34px;
+  animation: sway 3s ease-in-out infinite;
+}
+.tulip:nth-child(even){animation-delay:1.5s}
+@keyframes sway{
+  50%{transform:translateY(-6px) rotate(1deg)}
+}
+
+/* ================= YOUTUBE ================= */
+#ytWrap{position:fixed;left:-9999px;top:-9999px}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<!-- Tulip Field -->
+<div class="field" id="field"></div>
+
+<div class="stage">
+  <div class="card">
+    <h1>Will you be my Valentine? 💗</h1>
+
+    <p>
+      Despite us not being together for this <strong id="dateText">Valentine’s Day</strong>
+      Let's still make this day special and be there for eachother! ✨
+    </p>
+
+    <div class="actions">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <small>Love U Meri Jaan ✨</small>
+  </div>
+</div>
+
+<!-- YouTube -->
+<div id="ytWrap"><div id="ytPlayer"></div></div>
+
+<script>
+/* ================= SETTINGS ================= */
+const DETAILS={
+  date:"Valentine’s Day",
+  youtubeUrl:"https://youtu.be/U2SVCCENLjE?si=2ibkS0HEdwRwHCPR"
+};
+document.getElementById("dateText").textContent=DETAILS.date;
+
+/* ================= STARS ================= */
+for(let i=0;i<80;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*60+"vh";
+  s.style.animationDelay=Math.random()*3+"s";
+  document.body.appendChild(s);
+}
+
+/* ================= TULIPS ================= */
+const field=document.getElementById("field");
+const tulips=["🌷","🌸"];
+for(let i=0;i<60;i++){
+  const t=document.createElement("div");
+  t.className="tulip";
+  t.textContent=tulips[Math.floor(Math.random()*tulips.length)];
+  field.appendChild(t);
+}
+
+/* ================= FLOWER RAIN ================= */
+const rain=["🌸","🌷","🌹","💐"];
+function flowerRain(x){
+  for(let i=0;i<18;i++){
+    const f=document.createElement("div");
+    f.className="fall";
+    f.textContent=rain[Math.floor(Math.random()*rain.length)];
+    f.style.left=(x||Math.random()*100)+"vw";
+    f.style.animationDuration=(4+Math.random()*4)+"s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),9000);
+  }
+}
+setInterval(()=>flowerRain(),900);
+window.addEventListener("pointerdown",e=>flowerRain(e.clientX));
+
+/* ================= YES / NO ================= */
+document.getElementById("yesBtn").addEventListener("click",()=>{
+  window.location.href="yay.html";
+});
+
+const noBtn=document.getElementById("noBtn");
+["mouseenter","touchstart","pointerdown"].forEach(evt=>{
+  noBtn.addEventListener(evt,e=>{
+    e.preventDefault();
+    noBtn.classList.add("no-fly");
+    noBtn.style.left=Math.random()*(innerWidth-140)+"px";
+    noBtn.style.top=Math.random()*(innerHeight-60)+"px";
+  },{passive:false});
+});
+
+/* ================= MUSIC ================= */
+function extractYT(url){
+  try{
+    const u=new URL(url);
+    if(u.hostname.includes("youtu.be")) return u.pathname.slice(1);
+    return u.searchParams.get("v");
+  }catch{return""}
+}
+let ytPlayer=null;
+function loadYT(){
+  const s=document.createElement("script");
+  s.src="https://www.youtube.com/iframe_api";
+  document.head.appendChild(s);
+}
+window.onYouTubeIframeAPIReady=()=>{
+  ytPlayer=new YT.Player("ytPlayer",{
+    videoId:extractYT(DETAILS.youtubeUrl),
+    playerVars:{controls:0,autoplay:0},
+    events:{onReady:()=>ytPlayer.setVolume(45)}
+  });
+};
+loadYT();
+
+window.addEventListener("pointerdown",()=>{
+  try{ytPlayer.playVideo()}catch{}
+},{once:true});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Memories 💗</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#ff4fa3;
+  --hot:#ff2f7d;
+  --soft:#fff2f8;
+  --moon:#ffd6e8;
+  --scale: 1;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+
+/* ✅ BACKGROUND IMAGE + "RUNNING WATER" ANIMATION (keeps everything else same) */
+body{
+  font-family: Inter, system-ui, sans-serif;
+  color:var(--soft);
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  position:relative;
+  background:#000; /* fallback */
+}
+
+/* Put your image file next to this HTML and name it: image.jpg */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-8%;
+  background-image:url("image.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
+  /* makes the "water" feel like it's moving (gentle drift + tiny zoom) */
+  animation: waterDrift 14s linear infinite, waterBreath 6.5s ease-in-out infinite;
+  filter:saturate(1.05) contrast(1.05);
+  z-index:-2;
+}
+
+@keyframes waterDrift{
+  0%   { background-position: 48% 54%; }
+  50%  { background-position: 56% 58%; }
+  100% { background-position: 48% 54%; }
+}
+@keyframes waterBreath{
+  0%,100%{ transform: scale(1.02); }
+  50%{ transform: scale(1.06); }
+}
+
+/* Dark overlay + pink glow so text stays readable */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at center, rgba(255,79,163,.18), transparent 58%),
+    linear-gradient(180deg, rgba(4,0,6,.65), rgba(16,0,9,.70), rgba(0,0,0,.75));
+  z-index:-1;
+}
+
+/* ✅ App scales to always fit the viewport */
+#app{
+  width:1200px;
+  height:800px;
+  position:relative;
+  transform: scale(var(--scale));
+  transform-origin:center;
+}
+
+/* ================= STARS ================= */
+.star{
+  position:absolute;
+  width:3px;height:3px;
+  background:white;
+  border-radius:50%;
+  box-shadow:0 0 14px white;
+  animation: twinkle 3s infinite ease-in-out;
+  z-index:0;
+}
+@keyframes twinkle{50%{opacity:.35}}
+
+/* ================= MOONS + BOW ================= */
+.moon{
+  position:absolute; top:40px;
+  width:108px; height:108px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff, var(--moon));
+  box-shadow: 0 0 55px rgba(255,214,232,.95), 0 0 140px rgba(255,79,163,.55);
+  animation: moonGlow 4s ease-in-out infinite;
+  z-index:1;
+}
+.moon.left{left:56px}
+.moon.right{right:56px}
+@keyframes moonGlow{
+  50%{ box-shadow: 0 0 85px rgba(255,214,232,1), 0 0 190px rgba(255,79,163,.7); }
+}
+.bow{
+  position:absolute; top:78px; left:50%;
+  transform:translateX(-50%);
+  font-size:44px;
+  filter:drop-shadow(0 0 22px rgba(255,79,163,.85));
+  animation:pulse 2.5s ease-in-out infinite;
+  z-index:3;
+}
+@keyframes pulse{50%{transform:translateX(-50%) scale(1.06)}}
+
+/* ================= FLOWER RAIN ================= */
+.rain{
+  position:absolute;
+  font-size:18px;
+  pointer-events:none;
+  animation: fall linear forwards;
+  z-index:2;
+}
+@keyframes fall{
+  from{transform:translateY(-25vh);opacity:0}
+  10%{opacity:1}
+  to{transform:translateY(120vh);opacity:0}
+}
+
+/* ================= SPARKLES ================= */
+.spark{
+  position:absolute;
+  width:6px;height:6px;
+  border-radius:999px;
+  pointer-events:none;
+  background:rgba(255,214,232,.95);
+  box-shadow:0 0 16px rgba(255,214,232,.9), 0 0 28px rgba(255,79,163,.55);
+  animation:spark 700ms ease-out forwards;
+  z-index:10;
+}
+@keyframes spark{
+  to{opacity:0; transform:translate(-50%,-50%) scale(.12)}
+}
+
+/* ================= CHERRY TREES ================= */
+.tree{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:92px;
+  opacity:.95;
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,.55));
+  z-index:2;
+  pointer-events:none;
+}
+.tree.left{ left:72px; }
+.tree.right{ right:72px; }
+
+/* ================= CENTER TULIP ================= */
+.center{
+  position:absolute; inset:0;
+  display:grid; place-items:center;
+  z-index:1;
+  pointer-events:none;
+}
+.tulipWrap{ position:relative; width:140px; height:140px; }
+.tulip{
+  width:140px; height:140px; border-radius:50%;
+  background:radial-gradient(circle,#fff,var(--pink));
+  box-shadow: 0 0 65px rgba(255,79,163,.95), 0 0 150px rgba(255,79,163,.6);
+  display:grid; place-items:center;
+  font-size:64px;
+  animation: tulipPulse 3s ease-in-out infinite;
+}
+@keyframes tulipPulse{50%{transform:scale(1.07)}}
+
+/* Love orbit */
+.orbit{
+  position:absolute; inset:-52px;
+  animation: spin 16s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit span{
+  position:absolute;
+  font-family: Pacifico, cursive;
+  font-size:18px;
+  color:rgba(255,79,163,.85);
+  text-shadow:0 10px 22px rgba(0,0,0,.5);
+}
+.orbit span:nth-child(1){top:0;left:50%;transform:translateX(-50%)}
+.orbit span:nth-child(2){right:0;top:50%;transform:translateY(-50%)}
+.orbit span:nth-child(3){bottom:0;left:50%;transform:translateX(-50%)}
+.orbit span:nth-child(4){left:0;top:50%;transform:translateY(-50%)}
+
+/* ================= CONNECTOR LINES ================= */
+#lines{
+  position:absolute; inset:0;
+  z-index:2;
+  pointer-events:none;
+}
+
+/* ================= SIDE DECOR: FLOWERS + TEDDIES ================= */
+.decor{
+  position:absolute;
+  z-index:2;
+  pointer-events:none;
+  opacity:.92;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+}
+.decor.flower{
+  font-size:30px;
+  animation: floaty 4.6s ease-in-out infinite;
+}
+.decor.teddy{
+  font-size:44px;
+  animation: floaty 5.4s ease-in-out infinite;
+}
+@keyframes floaty{ 50%{ transform: translateY(-8px) } }
+
+.flowerCol{
+  position:absolute;
+  top:140px;
+  bottom:120px;
+  left:22px;
+  width:60px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  z-index:2;
+  pointer-events:none;
+}
+.flowerCol.right{
+  left:auto;
+  right:22px;
+}
+.t1{ top:140px; left:120px; }
+.t2{ top:140px; right:120px; }
+.t3{ bottom:140px; left:120px; }
+.t4{ bottom:140px; right:120px; }
+
+/* ================= ICON GRID (replaces postcards) ================= */
+.stage{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  z-index:4;
+  width: 980px;
+  height: 560px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:18px;
+}
+
+.memIcon{
+  position:relative;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.18);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.06)),
+    repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 7px, rgba(0,0,0,0) 7px 14px);
+  box-shadow:0 26px 78px rgba(0,0,0,.76);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition: transform .18s ease, filter .18s ease, border-color .18s ease;
+  overflow:hidden;
+}
+.memIcon:hover{
+  transform: translateY(-3px);
+  border-color: rgba(255,79,163,.45);
+  filter: brightness(1.06);
+}
+
+.iconInner{
+  display:grid;
+  place-items:center;
+  gap:10px;
+  padding:18px;
+  text-align:center;
+}
+
+.iconEmoji{
+  width:88px;
+  height:88px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  font-size:44px;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.75), rgba(255,79,163,.22));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 0 45px rgba(255,79,163,.35);
+}
+
+.iconTitle{
+  font-family: Pacifico, cursive;
+  font-size:20px;
+  opacity:.98;
+}
+
+.iconHint{
+  font-size:12px;
+  opacity:.78;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+/* ================= MEMORY VIEW MODAL (image + text underneath) ================= */
+.viewModal{
+  position:absolute; inset:0;
+  display:none;
+  place-items:center;
+  z-index:80;
+  background:rgba(0,0,0,.78);
+  backdrop-filter: blur(12px);
+}
+.viewCard{
+  width:min(900px, 94vw);
+  border-radius:26px;
+  border:1px solid rgba(255,79,163,.30);
+  background:linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.42));
+  box-shadow:0 30px 120px rgba(0,0,0,.9);
+  padding:16px;
+  max-height: 88vh;
+  overflow:auto;
+  position:relative;
+}
+.viewTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.viewTitle{
+  font-family: Pacifico, cursive;
+  font-size:32px;
+  margin:4px 0 10px;
+}
+.viewClose{
+  padding:10px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+}
+.viewImg{
+  width:100%;
+  height:min(56vh, 520px);
+  object-fit:contain;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.25);
+  padding:10px;
+  display:block;
+}
+.viewText{
+  margin:12px 0 0;
+  font-family: Inter, system-ui, sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  font-weight:700;
+  opacity:.97;
+  text-shadow:0 2px 10px rgba(0,0,0,.35);
+  white-space:pre-line;
+  text-align:center;
+  padding:6px 10px;
+}
+
+/* ================= SECRET BUTTON ================= */
+.secretBar{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:16px;
+  z-index:6;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+button{
+  padding:14px 22px;
+  border-radius:20px;
+  border:none;
+  cursor:pointer;
+  font-size:15px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(135deg,var(--hot),var(--pink));
+  box-shadow:0 18px 55px rgba(0,0,0,.7);
+  transition:.15s;
+}
+button:hover{filter:brightness(1.12); transform: translateY(-2px)}
+button:active{transform: translateY(0) scale(.98)}
+.hint{
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  opacity:.8;
+}
+
+/* ================= SECRET MODAL ================= */
+.modal{
+  position:absolute; inset:0;
+  display:none;
+  place-items:center;
+  z-index:50;
+  background:rgba(0,0,0,.72);
+  backdrop-filter: blur(10px);
+}
+.modalCard{
+  width:min(860px, 94vw);
+  border-radius:26px;
+  border:1px solid rgba(255,79,163,.30);
+  background:linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.40));
+  box-shadow:0 30px 110px rgba(0,0,0,.8);
+  padding:18px;
+  position:relative;
+  max-height: 86vh;
+  overflow:auto;
+}
+.modalCard h2{
+  margin:4px 0 10px;
+  font-family: Pacifico, cursive;
+  font-size:34px;
+}
+.modalCard p{
+  margin:0;
+  line-height:1.75;
+  font-size:15.8px;
+  opacity:.95;
+  white-space:pre-line;
+}
+.modalActions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-top:16px;
+  flex-wrap:wrap;
+}
+button.secondary{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.22);
+}
+
+/* small screen fallback */
+@media (max-width: 520px), (max-height: 520px){
+  .hint{display:none;}
+}
+</style>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- Stars -->
+  <script>
+  for(let i=0;i<110;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*70+"%";
+    s.style.animationDelay=Math.random()*3+"s";
+    document.getElementById("app").appendChild(s);
+  }
+  </script>
+
+  <!-- Moons + Bow -->
+  <div class="moon left"></div>
+  <div class="moon right"></div>
+  <div class="bow">🎀</div>
+
+  <!-- Cherry blossom trees -->
+  <div class="tree left">🌸🌳</div>
+  <div class="tree right">🌸🌳</div>
+
+  <!-- Side flowers -->
+  <div class="flowerCol">
+    <div class="decor flower">🌸</div>
+    <div class="decor flower">🌷</div>
+    <div class="decor flower">🌹</div>
+    <div class="decor flower">💐</div>
+    <div class="decor flower">🌺</div>
+  </div>
+  <div class="flowerCol right">
+    <div class="decor flower">🌺</div>
+    <div class="decor flower">💐</div>
+    <div class="decor flower">🌹</div>
+    <div class="decor flower">🌷</div>
+    <div class="decor flower">🌸</div>
+  </div>
+
+  <!-- Teddy bears -->
+  <div class="decor teddy t1">🧸</div>
+  <div class="decor teddy t2">🧸</div>
+  <div class="decor teddy t3">🧸</div>
+  <div class="decor teddy t4">🧸</div>
+
+  <!-- Connector lines -->
+  <svg id="lines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+
+  <!-- Center Tulip -->
+  <div class="center">
+    <div class="tulipWrap" id="tulipWrap">
+      <div class="orbit">
+        <span>Love You</span><span>Love You</span><span>Love You</span><span>Love You</span>
+      </div>
+      <div class="tulip" id="tulip">🌷</div>
+    </div>
+  </div>
+
+  <!-- ICONS -->
+  <div class="stage" id="stage">
+    <div class="memIcon" data-id="m1" data-title="Our First Trip" data-img="place1.jpg.JPG">
+      <div class="iconInner">
+        <div class="iconEmoji">📸</div>
+        <div class="iconTitle">Memory 1</div>
+        <div class="iconHint">tap to open</div>
+      </div>
+      <div class="memText" hidden>
+ahh the first ever time we went out, a trip that i can never forget filled with chaos of us finding ways around and trying to take pciture
+together- But it was one our best memories ever really fun and choatic but was cutest ever, Us still trying to knwo eachother!.
+      </div>
+    </div>
+
+    <div class="memIcon" data-id="m2" data-title="Cinema Night" data-img="place2.jpg.JPG">
+      <div class="iconInner">
+        <div class="iconEmoji">🎬</div>
+        <div class="iconTitle">Memory 2</div>
+        <div class="iconHint">tap to open</div>
+      </div>
+      <div class="memText" hidden>
+I mean how can i even forget this cinema day leaving the plan till last min and OFC the day we both got haircut :)
+this was definelty a joyful watch with me learning new things and also us spending some quality time together, And Most IMPORTANTLY
+these PICTURES absoulte choas trying to take pics at 12am but ofc it was our best memory!.
+      </div>
+    </div>
+
+    <div class="memIcon" data-id="m3" data-title="New Year" data-img="place3.jpg.JPG">
+      <div class="iconInner">
+        <div class="iconEmoji">🎆</div>
+        <div class="iconTitle">Memory 3</div>
+        <div class="iconHint">tap to open</div>
+      </div>
+      <div class="memText" hidden>
+One of my favorite selfies and Most importantly a Start to something very beautiful can never forget the New Year. truly a specil moment
+with you and truly a very enojable for both of Us, running around on the street in cold at 12am trying to catch the fireworks!
+AND how can i forget the Midnight kiss outside. Overall one my happiest moments ever and being with u made it truly wonderful!.
+      </div>
+    </div>
+
+    <div class="memIcon" data-id="m4" data-title="Oxford Again" data-img="place4.jpg.JPG">
+      <div class="iconInner">
+        <div class="iconEmoji">🧭</div>
+        <div class="iconTitle">Memory 4</div>
+        <div class="iconHint">tap to open</div>
+      </div>
+      <div class="memText" hidden>
+This was bit random, not a very expected second 3rd visit back to Oxford as we went around differnt villages on the train trying to find
+a place to eat, the Museum tour going around seeing ancient Artifacts. Meri jaan it was very beautiful moment including with every moment we've spent together
+      </div>
+    </div>
+  </div>
+
+  <!-- Memory View Modal -->
+  <div class="viewModal" id="viewModal">
+    <div class="viewCard" role="dialog" aria-modal="true" aria-label="Memory view">
+      <div class="viewTop">
+        <div class="viewTitle" id="viewTitle">Memory</div>
+        <button class="viewClose" id="viewClose">Close ✕</button>
+      </div>
+      <img class="viewImg" id="viewImg" src="" alt="Memory photo">
+      <div class="viewText" id="viewText"></div>
+    </div>
+  </div>
+
+  <!-- Secret button -->
+  <div class="secretBar">
+    <button id="secretBtn">Secret surprise for u 💝</button>
+    <div class="hint">tap anywhere for sparkles ✨</div>
+  </div>
+
+  <!-- Secret Modal -->
+  <div class="modal" id="modal">
+    <div class="modalCard">
+      <h2>My secret 💗</h2>
+      <p id="secretText"></p>
+      <div class="modalActions">
+        <button id="moreMagic">More magic ✨</button>
+        <button class="secondary" id="closeModal">Close ✕</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ================= AUTO FIT SCALE ================= */
+(function(){
+  const BASE_W = 1200, BASE_H = 800;
+  function fit(){
+    const s = Math.min(innerWidth / BASE_W, innerHeight / BASE_H);
+    document.documentElement.style.setProperty("--scale", String(Math.min(1, s)));
+  }
+  addEventListener("resize", fit);
+  fit();
+})();
+
+/* ================= FLOWER RAIN ================= */
+const flowers=["🌸","🌷","🌹","💐","🌺"];
+function flowerRainVW(xVW){
+  for(let i=0;i<7;i++){
+    const f=document.createElement("div");
+    f.className="rain";
+    f.textContent=flowers[Math.floor(Math.random()*flowers.length)];
+    f.style.left=(typeof xVW === "number" ? xVW : Math.random()*100) + "%";
+    f.style.animationDuration=(5+Math.random()*4)+"s";
+    document.getElementById("app").appendChild(f);
+    setTimeout(()=>f.remove(),11000);
+  }
+}
+let rainTimer = setInterval(()=>flowerRainVW(),1400);
+document.addEventListener("visibilitychange", ()=>{
+  if(document.hidden){ clearInterval(rainTimer); }
+  else{ rainTimer = setInterval(()=>flowerRainVW(),1400); }
+});
+
+/* ================= SPARKLES ================= */
+function sparkAt(x,y){
+  const app = document.getElementById("app");
+  const r = app.getBoundingClientRect();
+  const sp=document.createElement("div");
+  sp.className="spark";
+  sp.style.left=(x - r.left) + "px";
+  sp.style.top=(y - r.top) + "px";
+  sp.style.transform="translate(-50%,-50%)";
+  app.appendChild(sp);
+  setTimeout(()=>sp.remove(),720);
+}
+window.addEventListener("pointerdown",(e)=>{
+  sparkAt(e.clientX,e.clientY);
+  flowerRainVW((e.clientX / innerWidth) * 100);
+});
+
+/* ================= CONNECTOR LINES ================= */
+const svg = document.getElementById("lines");
+const tulipEl = document.getElementById("tulipWrap");
+const icons = Array.from(document.querySelectorAll(".memIcon"));
+
+function svgPointForElement(el){
+  const app = document.getElementById("app");
+  const a = app.getBoundingClientRect();
+  const r = el.getBoundingClientRect();
+  const cx = (r.left - a.left) + r.width/2;
+  const cy = (r.top - a.top) + r.height/2;
+  return { x:(cx/a.width)*100, y:(cy/a.height)*100 };
+}
+function clearLines(){ while(svg.firstChild) svg.removeChild(svg.firstChild); }
+
+let paths = [];
+function addLine(id, from, to, bright=false){
+  const d = `M ${from.x} ${from.y} C ${from.x} ${(from.y+to.y)/2} ${to.x} ${(from.y+to.y)/2} ${to.x} ${to.y}`;
+
+  const glow = document.createElementNS("http://www.w3.org/2000/svg","path");
+  glow.setAttribute("d", d);
+  glow.setAttribute("fill","none");
+  glow.setAttribute("stroke", bright ? "rgba(255,214,232,.70)" : "rgba(255,79,163,.28)");
+  glow.setAttribute("stroke-width", bright ? "0.95" : "0.75");
+  glow.setAttribute("stroke-linecap","round");
+  svg.appendChild(glow);
+
+  const line = document.createElementNS("http://www.w3.org/2000/svg","path");
+  line.setAttribute("d", d);
+  line.setAttribute("fill","none");
+  line.setAttribute("stroke", bright ? "rgba(255,79,163,.92)" : "rgba(255,79,163,.56)");
+  line.setAttribute("stroke-width", bright ? "0.58" : "0.46");
+  line.setAttribute("stroke-linecap","round");
+  line.setAttribute("id", `line-${id}`);
+  svg.appendChild(line);
+
+  const dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
+  dot.setAttribute("r","0.55");
+  dot.setAttribute("fill", bright ? "rgba(255,214,232,.98)" : "rgba(255,214,232,.72)");
+  dot.setAttribute("id", `dot-${id}`);
+  svg.appendChild(dot);
+
+  paths.push({ id, pathEl: line, dotEl: dot, t: Math.random() });
+}
+
+function rebuildLines(activeId=null){
+  clearLines();
+  paths = [];
+  const from = svgPointForElement(tulipEl);
+  icons.forEach((m, idx)=>{
+    const id = m.dataset.id || ("m"+idx);
+    const to = svgPointForElement(m);
+    addLine(id, from, to, activeId === id);
+  });
+}
+function tick(){
+  paths.forEach(p=>{
+    const len = p.pathEl.getTotalLength();
+    p.t += 0.0021;
+    if(p.t > 1) p.t = 0;
+    const pt = p.pathEl.getPointAtLength(len * p.t);
+    p.dotEl.setAttribute("cx", pt.x);
+    p.dotEl.setAttribute("cy", pt.y);
+  });
+  requestAnimationFrame(tick);
+}
+icons.forEach(m=>{
+  m.addEventListener("mouseenter", ()=> rebuildLines(m.dataset.id));
+  m.addEventListener("mouseleave", ()=> rebuildLines(null));
+});
+window.addEventListener("resize", ()=> rebuildLines(null));
+rebuildLines(null);
+requestAnimationFrame(tick);
+
+/* ================= MEMORY VIEW OPEN/CLOSE ================= */
+const viewModal = document.getElementById("viewModal");
+const viewTitle = document.getElementById("viewTitle");
+const viewImg   = document.getElementById("viewImg");
+const viewText  = document.getElementById("viewText");
+
+function openMemory(iconEl){
+  const title = iconEl.dataset.title || "Memory";
+  const img = iconEl.dataset.img || "";
+  const text = (iconEl.querySelector(".memText")?.textContent || "").trim();
+
+  viewTitle.textContent = title;
+  viewImg.src = img;
+  viewText.textContent = text;
+
+  viewModal.style.display = "grid";
+  flowerRainVW(50);
+}
+
+function closeMemory(){
+  viewModal.style.display = "none";
+  viewImg.src = "";
+  viewText.textContent = "";
+}
+
+icons.forEach(icon=>{
+  icon.addEventListener("click", ()=> openMemory(icon));
+});
+
+document.getElementById("viewClose").addEventListener("click", closeMemory);
+viewModal.addEventListener("click",(e)=>{ if(e.target===viewModal) closeMemory(); });
+
+/* ================= SECRET MODAL ================= */
+const modal = document.getElementById("modal");
+document.getElementById("secretBtn").addEventListener("click", ()=>{
+  modal.style.display = "grid";
+  for(let i=0;i<3;i++) setTimeout(()=> flowerRainVW(50), i*180);
+});
+document.getElementById("closeModal").addEventListener("click", ()=> modal.style.display="none");
+modal.addEventListener("click",(e)=>{ if(e.target===modal) modal.style.display="none"; });
+
+ document.getElementById("moreMagic").addEventListener("click", ()=>{
+  window.location.href = "postcards.html";
+});
+
+
+document.getElementById("secretText").textContent =
+`Any day whether i'm sick whether we have issues or im stressed or anything happening ,
+I’d still pick the ones with you.
+
+You are my comfort my secure place place where i can be myslef- You are everthing
+more late-night talks, stupid fights and sleeping calls and Ofc having to wake u up,
+ and more “us”.
+
+I love you My sweet Princess. 💗`;
+
+/* ================= ESC KEY ================= */
+window.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape") { closeMemory(); modal.style.display="none"; }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YAYYYY 💗</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --pink:#ff4fa3;
+  --hot:#ff2f7d;
+  --soft:#fff2f8;
+  --orange:#ffb36b;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  overflow:hidden;
+  font-family: Inter, system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 60% 30%, rgba(255,79,163,.35), transparent 55%),
+    linear-gradient(180deg,#050006,#12000a 60%,#000);
+  color:var(--soft);
+}
+
+/* ================= I LOVE YOU BACKGROUND ================= */
+.bg-love{
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+  z-index:0;
+}
+.bg-love span{
+  font-family: Pacifico, cursive;
+  font-size:clamp(120px,18vw,280px);
+  color:rgba(255,79,163,.08);
+  transform:rotate(-8deg);
+  animation: drift 16s linear infinite;
+}
+@keyframes drift{
+  from{transform:translateX(-20%) rotate(-8deg)}
+  to{transform:translateX(20%) rotate(-8deg)}
+}
+
+/* ================= MOON ================= */
+.moon{
+  position:absolute;
+  top:50px;
+  right:70px;
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff0d8, var(--orange));
+  box-shadow:
+    0 0 70px rgba(255,179,107,.95),
+    0 0 180px rgba(255,79,163,.6);
+  animation: moonPulse 4s ease-in-out infinite;
+  z-index:1;
+}
+@keyframes moonPulse{
+  50%{
+    box-shadow:
+      0 0 100px rgba(255,179,107,1),
+      0 0 220px rgba(255,79,163,.75);
+  }
+}
+
+/* ================= PLANET BOUQUETS ================= */
+.planet{
+  position:fixed;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:radial-gradient(circle,#fff,#ff79c6);
+  box-shadow:0 0 20px #ff79c6,0 0 50px rgba(255,79,163,.5);
+  animation: orbit 16s linear infinite;
+  z-index:1;
+}
+.planet::after{
+  content:"🌸";
+  position:absolute;
+  top:-16px;
+  left:-12px;
+  font-size:22px;
+}
+@keyframes orbit{
+  from{transform:translateX(-140px)}
+  to{transform:translateX(120vw)}
+}
+
+/* ================= YAY DROP ================= */
+.yay{
+  position:absolute;
+  top:-200px;
+  width:100%;
+  text-align:center;
+  font-family: Pacifico, cursive;
+  font-size:clamp(80px,7vw,130px);
+  color:#fff;
+  text-shadow:
+    0 25px 80px rgba(255,79,163,.9),
+    0 0 50px rgba(255,79,163,.7);
+  animation: yayDrop 1.4s cubic-bezier(.1,.9,.2,1) forwards;
+  z-index:3;
+}
+@keyframes yayDrop{
+  to{top:30px}
+}
+
+/* ================= FLOWER RAIN ================= */
+.rain{
+  position:fixed;
+  font-size:24px;
+  pointer-events:none;
+  animation: fall linear forwards;
+  z-index:2;
+}
+@keyframes fall{
+  from{transform:translateY(-30vh);opacity:0}
+  10%{opacity:1}
+  to{transform:translateY(130vh);opacity:0}
+}
+
+/* ================= CENTER ================= */
+.stage{
+  height:100%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  z-index:3;
+  padding:20px;
+}
+
+.card{
+  max-width:1100px;
+  width:100%;
+  padding:40px 42px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:40px;
+  box-shadow:0 50px 140px rgba(0,0,0,.9);
+  display:grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap:26px;
+  align-items:center;
+}
+
+/* ================= POSTCARDS ================= */
+.postcard{
+  padding:26px;
+  border-radius:30px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.22);
+  font-size:17px;
+  line-height:1.7;
+}
+.postcard h3{
+  font-family: Pacifico, cursive;
+  margin:0 0 10px;
+  font-size:26px;
+}
+
+/* ================= PHOTOS ================= */
+.photos{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.photo{
+  height:260px;
+  border-radius:30px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(0,0,0,.35);
+  box-shadow:0 30px 80px rgba(0,0,0,.7);
+}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* ================= BUTTON ================= */
+.btnRow{
+  grid-column:1/-1;
+  margin-top:10px; /* moved closer under photos */
+  display:flex;
+  justify-content:center;
+}
+button{
+  padding:18px 34px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-size:19px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(135deg,var(--hot),var(--pink));
+  transition:.15s;
+}
+button:hover{filter:brightness(1.12)}
+
+@media(max-width:900px){
+  .card{grid-template-columns:1fr}
+  .photos{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg-love"><span>I Love You</span></div>
+<div class="moon"></div>
+<div class="yay">YAYYYY!! 💗</div>
+
+<div class="stage">
+  <div class="card">
+
+    <!-- LEFT POSTCARD -->
+    <div class="postcard">
+      <h3>For You 💌</h3>
+      You choosing "Yes" means everything to me, I love you alot baby,
+	  you mean everthing to me despite all the thing between us. You've been the Best part of my life
+	  Youre still my sweet Princess. Ive always loved ur company and enjoyed your presense, the time we spent the moments we had
+	  the time everythinh will be specail for Me.
+    </div>
+
+    <!-- CENTER PHOTOS + BUTTON UNDER THEM -->
+    <div class="photos">
+      <div class="photo">
+        <img src="fav.jpg.JPG" alt="Us together">
+      </div>
+      <div class="photo">
+        <img src="fav1.jpg.jpg" alt="Us together">
+      </div>
+
+      <div class="btnRow">
+        <button onclick="window.location.href='memories.html'">
+          Get More Flowers 🌸
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT POSTCARD -->
+    <div class="postcard">
+      <h3>My Promise 🌷</h3>
+      I’ll always choose you, protect your heart,
+      and keep creating memories that feel like magic, wheater in good times or bad times
+	  i'd always choose you. I promise to be better and be the right one and also be able to Support you despite your Mood Swings ;).
+	  Promise you to stay no matter what and always try to fix everything between us.For us to be happy together.
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ================= PLANETS ================= */
+for(let i=0;i<12;i++){
+  const p=document.createElement("div");
+  p.className="planet";
+  p.style.top=Math.random()*60+"vh";
+  p.style.animationDelay=Math.random()*12+"s";
+  document.body.appendChild(p);
+}
+
+/* ================= FLOWER RAIN ================= */
+const flowers=["🌸","🌷","🌹","💐","🌺"];
+function flowerRain(x){
+  for(let i=0;i<28;i++){
+    const f=document.createElement("div");
+    f.className="rain";
+    f.textContent=flowers[Math.floor(Math.random()*flowers.length)];
+    f.style.left=(x||Math.random()*100)+"vw";
+    f.style.animationDuration=(4+Math.random()*4)+"s";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),10000);
+  }
+}
+setInterval(()=>flowerRain(),700);
+
+function celebrate(){
+  flowerRain(innerWidth/2);
+}
+
+/* initial celebration */
+setTimeout(()=>celebrate(),600);
+</script>
+
+</body>
+</html>
